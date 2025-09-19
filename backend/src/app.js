@@ -10,6 +10,10 @@ import { getConfig, getRateLimitConfig, getCorsConfig } from './config/index.js'
 
 const app = express();
 
+// 🌐 Trust proxy for Vercel deployment
+// This is required for rate limiting to work properly behind Vercel's proxy
+app.set('trust proxy', 1);
+
 // Get configuration
 const rateLimitConfig = getRateLimitConfig();
 const corsConfig = getCorsConfig();
@@ -47,6 +51,10 @@ const limiter = rateLimit({
 	message: { error: 'too_many_requests', message: 'Too many requests from this IP' },
 	standardHeaders: true,
 	legacyHeaders: false,
+	// Custom key generator for proxy environments
+	keyGenerator: (req) => {
+		return req.ip || req.connection.remoteAddress || 'unknown';
+	},
 	handler: (req, res) => {
 		res.status(429).json({ error: 'too_many_requests', message: 'Too many requests from this IP' });
 	}
@@ -58,6 +66,10 @@ const authLimiter = rateLimit({
 	max: rateLimitConfig.AUTH_MAX_REQUESTS,
 	message: { error: 'too_many_login_attempts', message: 'Too many login attempts from this IP' },
 	skipSuccessfulRequests: rateLimitConfig.SKIP_SUCCESSFUL_REQUESTS,
+	// Custom key generator for proxy environments
+	keyGenerator: (req) => {
+		return req.ip || req.connection.remoteAddress || 'unknown';
+	},
 	handler: (req, res) => {
 		res.status(429).json({ error: 'too_many_login_attempts', message: 'Too many login attempts from this IP' });
 	}
