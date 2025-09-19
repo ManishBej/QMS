@@ -15,14 +15,19 @@ export function authenticate(req, res, next) {
   const authHeader = req.headers.authorization;
   if (authHeader && authHeader.startsWith('Bearer ')) {
     token = authHeader.substring(7);
+    console.log('🔐 JWT token found in Authorization header:', token.substring(0, 20) + '...');
   }
   
   // Fallback to HttpOnly cookies (for same-domain)
   if (!token) {
     token = req.cookies?.qms_token;
+    if (token) {
+      console.log('🍪 Token found in cookies:', token.substring(0, 20) + '...');
+    }
   }
   
   if (!token) {
+    console.log('❌ No token found in Authorization header or cookies');
     return res.status(401).json({ 
       error: 'unauthorized',
       message: 'Authentication required' 
@@ -32,8 +37,10 @@ export function authenticate(req, res, next) {
   try {
     const payload = jwt.verify(token, JWT_SECRET);
     req.user = { userId: payload.sub, roles: payload.roles };
+    console.log('✅ JWT verification successful for user:', payload.username, 'roles:', payload.roles);
     return next();
   } catch (e) {
+    console.log('❌ JWT verification failed:', e.message);
     // Clear invalid cookie if it exists
     if (req.cookies?.qms_token) {
       res.clearCookie('qms_token', {

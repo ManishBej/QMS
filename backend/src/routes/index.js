@@ -170,6 +170,8 @@ router.post('/login', validateLogin, async (req, res) => {
     // Don't set HttpOnly cookie for cross-domain deployments
     // setTokenCookie(res, token);
     
+    console.log('🔐 JWT token generated for login:', token.substring(0, 20) + '...');
+    
     // Standardized response format with token in response body
     res.json({
       success: true,

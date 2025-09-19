@@ -51,10 +51,7 @@ const limiter = rateLimit({
 	message: { error: 'too_many_requests', message: 'Too many requests from this IP' },
 	standardHeaders: true,
 	legacyHeaders: false,
-	// Custom key generator for proxy environments
-	keyGenerator: (req) => {
-		return req.ip || req.connection.remoteAddress || 'unknown';
-	},
+	// Use default keyGenerator for proper IPv6 support
 	handler: (req, res) => {
 		res.status(429).json({ error: 'too_many_requests', message: 'Too many requests from this IP' });
 	}
@@ -66,10 +63,7 @@ const authLimiter = rateLimit({
 	max: rateLimitConfig.AUTH_MAX_REQUESTS,
 	message: { error: 'too_many_login_attempts', message: 'Too many login attempts from this IP' },
 	skipSuccessfulRequests: rateLimitConfig.SKIP_SUCCESSFUL_REQUESTS,
-	// Custom key generator for proxy environments
-	keyGenerator: (req) => {
-		return req.ip || req.connection.remoteAddress || 'unknown';
-	},
+	// Use default keyGenerator for proper IPv6 support
 	handler: (req, res) => {
 		res.status(429).json({ error: 'too_many_login_attempts', message: 'Too many login attempts from this IP' });
 	}
