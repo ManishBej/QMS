@@ -13,8 +13,17 @@ export function authenticate(req, res, next) {
   
   // First, try Authorization header (for JWT tokens)
   const authHeader = req.headers.authorization;
+  console.log('🔍 Raw Authorization header:', JSON.stringify(authHeader));
+  
   if (authHeader && authHeader.startsWith('Bearer ')) {
-    token = authHeader.substring(7);
+    token = authHeader.substring(7).trim();
+    console.log('🔍 Extracted token before cleaning:', JSON.stringify(token));
+    
+    // Remove any surrounding quotes that might have been added
+    if ((token.startsWith('"') && token.endsWith('"')) || (token.startsWith("'") && token.endsWith("'"))) {
+      console.log('🧹 Removing surrounding quotes from token');
+      token = token.slice(1, -1);
+    }
     console.log('🔐 JWT token found in Authorization header:', token.substring(0, 20) + '...');
   }
   
