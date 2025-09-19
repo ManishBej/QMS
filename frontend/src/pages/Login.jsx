@@ -141,19 +141,7 @@ export default function Login({ onLogin }) {
           </button>
         </form>
 
-        <div className="login-footer">
-          <p className="muted">Default credentials: admin / SecureAdmin123!</p>
-          <p className="muted">Backend must be running on port 3001.</p>
-          <button 
-            onClick={testConnection}
-            className="btn secondary test-btn"
-          >
-            Test Backend Connection
-          </button>
-          <div style={{ marginTop: '12px' }}>
-            <small className="muted">💡 Click the theme toggle in the top-right to switch between dark and light modes</small>
-          </div>
-        </div>
+        
       </div>
     </div>
   );
