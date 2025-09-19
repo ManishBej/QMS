@@ -115,7 +115,7 @@ export default function Login({ onLogin }) {
               value={password}
               onChange={e => setPassword(e.target.value)}
               autoComplete="current-password"
-              placeholder="SecureAdmin123!"
+              placeholder="SecureProductionPassword123!"
             />
           </div>
           
