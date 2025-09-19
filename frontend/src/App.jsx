@@ -22,11 +22,20 @@ cleanupLocalStorage();
 protectConsole();
 
 export default function App() {
-  const [token, setToken] = useState(isAuthenticated() ? 'authenticated' : null);
+  // Initialize with actual stored token
+  const storedToken = localStorage.getItem('token');
+  const [token, setToken] = useState(storedToken);
   const [profile, setProfile] = useState(null);
   const [loading, setLoading] = useState(false);
   const [view, setView] = useState('dashboard');
   const [editQuoteId, setEditQuoteId] = useState(null); // Track which quote is being edited
+
+  // Initialize authentication on app load
+  useEffect(() => {
+    if (storedToken) {
+      setAuthToken(storedToken); // Restore token to axios headers
+    }
+  }, []);
 
   useEffect(() => {
     console.log('🔄 useEffect triggered with token:', token);
@@ -121,7 +130,8 @@ export default function App() {
       <NotificationProvider>
         <ErrorBoundary>
           <Login onLogin={(userData) => {
-            setToken('authenticated');
+            const token = localStorage.getItem('token');
+            setToken(token);
             setProfile(userData);
           }} />
         </ErrorBoundary>

@@ -106,18 +106,20 @@ function clearCSRFToken() {
   csrfToken = null;
 }
 
-// Simplified authentication - HttpOnly cookies only
+// JWT token authentication for cross-domain deployments
 export function setAuthToken(token) {
-  // For HttpOnly cookie authentication, we don't need to store tokens in localStorage
-  // The server handles the secure cookie, we just need to track authentication state
-  if (token && typeof token === 'string') {
-    // Store a simple flag to indicate authentication status
+  if (token && typeof token === 'string' && token !== 'authenticated') {
+    // Store the actual JWT token
+    safeStorage.setItem('token', token);
     safeStorage.setItem('qms_authenticated', 'true');
+    // Set Authorization header for all future requests
+    api.defaults.headers.common.Authorization = `Bearer ${token}`;
   } else {
+    // Clear authentication
+    safeStorage.removeItem('token');
     safeStorage.removeItem('qms_authenticated');
+    delete api.defaults.headers.common.Authorization;
   }
-  // Remove any Authorization headers since we're using cookies only
-  delete api.defaults.headers.common.Authorization;
 }
 
 // Check if user is authenticated (simple flag check)

@@ -11,9 +11,15 @@
     "dev:hmr-ws": "vite --host localhost --port 5173",
     "dev:hmr-wss": "vite --host localhost --port 5173 --https",
     "build": "vite build",
+    "build:production": "NODE_ENV=production vite build",
     "preview": "vite preview",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "lint": "eslint src --ext .js,.jsx,.ts,.tsx",
+    "lint:fix": "eslint src --ext .js,.jsx,.ts,.tsx --fix",
+    "type-check": "tsc --noEmit",
+    "deploy": "vercel --prod",
+    "deploy:preview": "vercel"
   },
   "dependencies": {
     "axios": "^1.7.2",
@@ -26,7 +32,11 @@
     "@testing-library/user-event": "^14.6.1",
     "@types/react": "^18.2.46",
     "@types/react-dom": "^18.2.18",
+    "@vitejs/plugin-react": "^4.3.1",
     "autoprefixer": "^10.4.21",
+    "eslint": "^8.57.0",
+    "eslint-plugin-react": "^7.35.0",
+    "eslint-plugin-react-hooks": "^4.6.2",
     "jsdom": "^26.1.0",
     "postcss": "^8.5.6",
     "tailwindcss": "^3.4.17",

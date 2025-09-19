@@ -9,12 +9,20 @@
   "scripts": {
     "dev": "node --watch src/server.js",
     "start": "node src/server.js",
+    "start:production": "NODE_ENV=production node src/server.js",
     "seed:admin": "node scripts/seedAdmin.js",
+    "seed:admin:production": "NODE_ENV=production node scripts/seedAdmin.js",
     "migrate:products": "node scripts/migrateProducts.js",
     "security:validate": "node scripts/validateSecurity.js",
     "security:audit": "npm audit --audit-level=moderate",
     "test": "set NODE_OPTIONS=--experimental-vm-modules && jest -c jest.config.mjs --runInBand",
-    "test:watch": "set NODE_OPTIONS=--experimental-vm-modules && jest -c jest.config.mjs --watch"
+    "test:watch": "set NODE_OPTIONS=--experimental-vm-modules && jest -c jest.config.mjs --watch",
+    "lint": "eslint src --ext .js,.ts",
+    "lint:fix": "eslint src --ext .js,.ts --fix",
+    "type-check": "tsc --noEmit",
+    "deploy": "vercel --prod",
+    "deploy:preview": "vercel",
+    "logs": "vercel logs"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",

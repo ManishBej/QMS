@@ -167,12 +167,14 @@ router.post('/login', validateLogin, async (req, res) => {
     await user.save();
 
     const token = signToken(user);
-    setTokenCookie(res, token);
+    // Don't set HttpOnly cookie for cross-domain deployments
+    // setTokenCookie(res, token);
     
-    // Standardized response format
+    // Standardized response format with token in response body
     res.json({
       success: true,
       message: 'Login successful',
+      token: token, // Return JWT token directly
       user: {
         id: user._id,
         username: user.username,

@@ -8,8 +8,19 @@ if (!JWT_SECRET) {
 }
 
 export function authenticate(req, res, next) {
-  // Use HttpOnly cookies only for better security
-  const token = req.cookies?.qms_token;
+  // Support both Authorization header (for cross-domain) and HttpOnly cookies
+  let token = null;
+  
+  // First, try Authorization header (for JWT tokens)
+  const authHeader = req.headers.authorization;
+  if (authHeader && authHeader.startsWith('Bearer ')) {
+    token = authHeader.substring(7);
+  }
+  
+  // Fallback to HttpOnly cookies (for same-domain)
+  if (!token) {
+    token = req.cookies?.qms_token;
+  }
   
   if (!token) {
     return res.status(401).json({ 
@@ -23,13 +34,15 @@ export function authenticate(req, res, next) {
     req.user = { userId: payload.sub, roles: payload.roles };
     return next();
   } catch (e) {
-    // Clear invalid cookie
-    res.clearCookie('qms_token', {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'strict',
-      path: '/'
-    });
+    // Clear invalid cookie if it exists
+    if (req.cookies?.qms_token) {
+      res.clearCookie('qms_token', {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'strict',
+        path: '/'
+      });
+    }
     return res.status(401).json({ 
       error: 'invalid_token',
       message: 'Invalid or expired session' 

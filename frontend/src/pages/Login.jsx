@@ -33,13 +33,13 @@ export default function Login({ onLogin }) {
       delete api.defaults.headers.common['X-CSRF-Token'];
       
       const res = await api.post('/login', { username, password });
-      const { success, user, message } = res.data;
+      const { success, user, message, token } = res.data;
       
-      console.log('📡 Login response received:', { success, user: !!user, message });
+      console.log('📡 Login response received:', { success, user: !!user, message, hasToken: !!token });
       
-      if (success && user) {
-        console.log('✅ Login successful - HttpOnly cookie set by server');
-        setAuthToken('authenticated'); // Simple flag, real auth is in HttpOnly cookie
+      if (success && user && token) {
+        console.log('✅ Login successful - JWT token received');
+        setAuthToken(token); // Set the actual JWT token
         onLogin(user);
       } else {
         console.error('❌ Login failed: invalid response format');
