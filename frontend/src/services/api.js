@@ -114,11 +114,13 @@ export function setAuthToken(token) {
     safeStorage.setItem('qms_authenticated', 'true');
     // Set Authorization header for all future requests
     api.defaults.headers.common.Authorization = `Bearer ${token}`;
+    console.log('🔐 JWT token stored and Authorization header set');
   } else {
     // Clear authentication
     safeStorage.removeItem('token');
     safeStorage.removeItem('qms_authenticated');
     delete api.defaults.headers.common.Authorization;
+    console.log('🚫 Authentication cleared');
   }
 }
 
@@ -129,9 +131,11 @@ export function isAuthenticated() {
 
 // Clear all authentication data
 export function clearAuth() {
+  safeStorage.removeItem('token');
   safeStorage.removeItem('qms_authenticated');
   delete api.defaults.headers.common.Authorization;
   clearCSRFToken();
+  console.log('🧹 All authentication data cleared');
   // HttpOnly cookies are cleared by the server
 }
 
