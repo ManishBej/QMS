@@ -1,0 +1,17 @@
+{
+  "baseColumns": [
+    { "header": "INDENT NO.", "source": "rfq._id" },
+    { "header": "SL NO", "source": "itemIndex" },
+    { "header": "Item Description", "source": "item.sku" },
+    { "header": "UOM", "source": "item.unit" },
+    { "header": "QTY", "source": "item.quantity" },
+    { "header": "WEIGHT", "source": null }
+  ],
+  "quoteColumnSet": [
+    { "header": "RATE/PCS", "source": "quote.items[i].unitPrice" },
+    { "header": "MAKE", "source": "quote.supplierName" },
+    { "header": "NET RATE", "source": "quote.items[i].unitPrice" },
+    { "header": "TOTAL AMOUNT", "source": "quote.items[i].total" }
+  ],
+  "notes": "For each supplier (quote) the quoteColumnSet is appended in order of quote creation. MAKE repeats supplier name. NET RATE currently mirrors unitPrice (discount logic not yet implemented). WEIGHT left blank (future enhancement)."
+}

@@ -1,0 +1,49 @@
+{
+  "name": "qms-backend",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "scripts": {
+    "dev": "node --watch src/server.js",
+    "start": "node src/server.js",
+    "seed:admin": "node scripts/seedAdmin.js",
+    "migrate:products": "node scripts/migrateProducts.js",
+    "security:validate": "node scripts/validateSecurity.js",
+    "security:audit": "npm audit --audit-level=moderate",
+    "test": "set NODE_OPTIONS=--experimental-vm-modules && jest -c jest.config.mjs --runInBand",
+    "test:watch": "set NODE_OPTIONS=--experimental-vm-modules && jest -c jest.config.mjs --watch"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "dotenv": "^16.6.1",
+    "exceljs": "^4.4.0",
+    "express": "^4.19.2",
+    "express-mongo-sanitize": "^2.2.0",
+    "express-rate-limit": "^8.0.1",
+    "express-validator": "^7.2.1",
+    "helmet": "^8.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.18.0",
+    "multer": "^1.4.5-lts.1",
+    "node-cron": "^3.0.3",
+    "node-fetch": "^3.3.2"
+  },
+  "devDependencies": {
+    "@jest/globals": "^29.7.0",
+    "@types/express": "^4.17.21",
+    "@types/node": "^20.11.30",
+    "@typescript-eslint/eslint-plugin": "^7.0.0",
+    "@typescript-eslint/parser": "^7.0.0",
+    "eslint": "^8.57.0",
+    "jest": "^29.7.0",
+    "mongodb-memory-server": "^9.1.6",
+    "supertest": "^7.1.4",
+    "tsx": "^4.7.0",
+    "typescript": "^5.4.0"
+  }
+}

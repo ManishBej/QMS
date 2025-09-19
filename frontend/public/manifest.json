@@ -1,0 +1,47 @@
+{
+  "name": "QMS - Quotation Management System",
+  "short_name": "QMS Portal",
+  "description": "Professional quotation management system for efficient procurement and vendor management",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "theme_color": "#18b4a7",
+  "background_color": "#0b1220",
+  "categories": ["business", "productivity", "utilities"],
+  "lang": "en",
+  "dir": "ltr",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "32x32",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/apple-touch-icon.svg",
+      "sizes": "180x180",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Create RFQ",
+      "short_name": "New RFQ",
+      "description": "Create a new request for quotation",
+      "url": "/#/rfq-create"
+    },
+    {
+      "name": "Dashboard",
+      "short_name": "Dashboard",
+      "description": "View procurement dashboard",
+      "url": "/#/dashboard"
+    }
+  ],
+  "edge_side_panel": {
+    "preferred_width": 350
+  },
+  "prefer_related_applications": false,
+  "scope": "/",
+  "id": "qms-portal"
+}

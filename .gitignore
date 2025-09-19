@@ -1,0 +1,25 @@
+# Node
+node_modules/
+npm-debug.log*
+package-lock.json
+
+# Logs
+logs/
+*.log
+logs/**/*.log
+
+# Env files (keep secrets out of git)
+.env
+backend/.env
+frontend/.env
+.env.*.local
+
+# Build outputs
+dist/
+build/
+coverage/
+*.tsbuildinfo
+
+# OS
+.DS_Store
+Thumbs.db
